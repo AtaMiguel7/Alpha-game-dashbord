@@ -3,416 +3,529 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 آلفا گیم | راهنمای کامل ربات</title>
+    <title>آلفا گیم | راهنمای کامل ربات</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Segoe UI', 'Poppins', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             min-height: 100vh;
             color: #fff;
             padding: 20px;
         }
-        .container { max-width: 1200px; margin: 0 auto; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
         .header {
             text-align: center;
             padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
             border-radius: 30px;
             margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
         }
+
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.5rem;
             background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            background-clip: text;
         }
-        .header p { color: rgba(255, 255, 255, 0.7); font-size: 1.1em; }
-        .bot-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-            flex-wrap: wrap;
+
+        .header p {
+            color: rgba(255,255,255,0.7);
+            margin-top: 10px;
         }
-        .bot-link {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            color: #4ecdc4;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(78, 205, 196, 0.3);
+
+        .badge {
+            display: inline-block;
+            background: rgba(78,205,196,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin: 5px;
         }
-        .bot-link:hover { background: rgba(78, 205, 196, 0.2); transform: translateY(-2px); }
-        .section-wrapper { margin-bottom: 20px; }
-        .section {
-            background: rgba(255, 255, 255, 0.05);
+
+        .card {
+            background: rgba(255,255,255,0.08);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
             transition: all 0.3s ease;
+        }
+
+        .card-header {
+            padding: 18px 22px;
             cursor: pointer;
+            background: rgba(0,0,0,0.3);
+            font-weight: bold;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
         }
-        .section:hover { transform: translateY(-3px); border-color: rgba(78, 205, 196, 0.5); background: rgba(255, 255, 255, 0.08); }
-        .section.active { border-color: #4ecdc4; background: rgba(78, 205, 196, 0.1); }
-        .section-title { font-size: 1.5em; font-weight: 600; display: flex; align-items: center; gap: 10px; }
-        .section-preview { color: rgba(255, 255, 255, 0.5); font-size: 0.85em; margin-top: 8px; }
-        .detail-box {
-            background: linear-gradient(135deg, rgba(78, 205, 196, 0.15), rgba(255, 107, 107, 0.1));
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 10px;
-            border: 1px solid rgba(78, 205, 196, 0.3);
-            display: none;
+
+        .card-header:hover {
+            background: rgba(78,205,196,0.2);
         }
-        .detail-box.show { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        .detail-title { font-size: 1.4em; margin-bottom: 12px; color: #4ecdc4; }
-        .detail-desc { line-height: 1.7; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; }
-        .detail-commands { background: rgba(0, 0, 0, 0.3); border-radius: 15px; padding: 15px; margin-top: 10px; }
-        .detail-commands h4 { color: #ff6b6b; margin-bottom: 10px; }
-        .detail-commands ul { list-style: none; padding-right: 0; }
-        .detail-commands li { padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-        .detail-commands li:last-child { border-bottom: none; }
-        .cmd-name { color: #4ecdc4; font-weight: bold; display: inline-block; font-family: monospace; }
-        .cmd-desc { color: rgba(255, 255, 255, 0.7); font-size: 0.9em; margin-right: 10px; }
-        .cmd-example { color: #ff6b6b; font-size: 0.8em; margin-top: 5px; font-family: monospace; }
-        .badge { display: inline-block; background: rgba(78, 205, 196, 0.2); padding: 2px 8px; border-radius: 20px; font-size: 0.7em; color: #4ecdc4; margin-left: 8px; }
-        .jobs-grid, .packages-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin-top: 10px; }
-        .job-item, .package-item { background: rgba(0, 0, 0, 0.3); padding: 8px 12px; border-radius: 10px; font-size: 0.85em; }
-        .footer { text-align: center; padding: 30px; color: rgba(255, 255, 255, 0.5); font-size: 0.9em; margin-top: 20px; }
-        @media (max-width: 768px) { .section-title { font-size: 1.2em; } .header h1 { font-size: 1.8em; } .detail-title { font-size: 1.2em; } .jobs-grid, .packages-grid { grid-template-columns: 1fr; } }
+
+        .card-header .emoji {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
+
+        .card-header .title {
+            flex: 1;
+        }
+
+        .card-header .arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+
+        .card.active .card-header .arrow {
+            transform: rotate(180deg);
+        }
+
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            padding: 0 22px;
+        }
+
+        .card.active .card-content {
+            max-height: 3000px;
+            padding: 20px 22px;
+        }
+
+        .cmd-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cmd-table tr {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cmd-table td {
+            padding: 12px 8px;
+            vertical-align: top;
+        }
+
+        .cmd-table td:first-child {
+            font-family: monospace;
+            font-weight: bold;
+            color: #4ecdc4;
+            width: 38%;
+        }
+
+        .cmd-table td:last-child {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* لیست مشاغل زیبا */
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .job-card {
+            background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(78,205,196,0.1));
+            border-radius: 16px;
+            padding: 15px;
+            border: 1px solid rgba(78,205,196,0.3);
+            transition: all 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-3px);
+            border-color: #4ecdc4;
+            box-shadow: 0 5px 20px rgba(78,205,196,0.2);
+        }
+
+        .job-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffd93d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .job-price {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding: 5px 0;
+        }
+
+        .price-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.85rem;
+        }
+
+        .price-value {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .salary-value {
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .shop-item {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(78,205,196,0.3);
+        }
+
+        .shop-item h4 {
+            color: #ffd93d;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .shop-item .coins {
+            font-size: 1.1rem;
+            color: #4ecdc4;
+        }
+
+        .shop-item .price {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .shop-note {
+            background: rgba(255,107,107,0.2);
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .tip-box {
+            background: rgba(78,205,196,0.15);
+            border-right: 3px solid #4ecdc4;
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .cmd-table td:first-child {
+                width: 45%;
+                font-size: 0.85rem;
+            }
+            .cmd-table td:last-child {
+                font-size: 0.85rem;
+            }
+            .card-header {
+                padding: 14px 16px;
+                font-size: 1rem;
+            }
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🎮 آلفا گیم</h1>
-            <p>راهنمای کامل ربات بازی آلفا گیم</p>
-            <div class="bot-links">
-                <a href="https://rubika.ir/Game_Alpha_Bot" target="_blank" class="bot-link">🤖 ربات آلفا گیم</a>
-                <a href="https://rubika.ir/Alpha_Bots" target="_blank" class="bot-link">📢 کانال آلفا گیم</a>
-                <a href="https://rubika.ir/HI_IM_MIGUEL" target="_blank" class="bot-link">👑 پشتیبانی</a>
-            </div>
-        </div>
-
-        <!-- دستورات پایه -->
-        <div class="section-wrapper">
-            <div class="section" data-section="basic">
-                <div class="section-title"><span>📋</span> دستورات پایه</div>
-                <div class="section-preview">موجودی، انتقال، کد دعوت، لقب و...</div>
-            </div>
-            <div class="detail-box" id="detail-basic">
-                <div class="detail-title">📋 دستورات پایه</div>
-                <div class="detail-desc">دستورات پایه برای مدیریت حساب کاربری، انتقال موجودی، تنظیم لقب و استفاده از کدهای دعوت و هدیه.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">موجودی</span><span class="cmd-desc">نمایش اطلاعات کامل شما</span></li>
-                        <li><span class="cmd-name">موجودی @لقب</span><span class="cmd-desc">نمایش اطلاعات کاربر دیگر</span><div class="cmd-example">مثال: موجودی @میگل</div></li>
-                        <li><span class="cmd-name">لقب [نام]</span><span class="cmd-desc">تنظیم لقب یکتا (3-15 کاراکتر)</span><div class="cmd-example">مثال: لقب میگل</div></li>
-                        <li><span class="cmd-name">انتقال [مبلغ] @لقب</span><span class="cmd-desc">انتقال کوین به کاربر دیگر</span><div class="cmd-example">مثال: انتقال 5000000 @میگل</div></li>
-                        <li><span class="cmd-name">انتقال الماس [تعداد] @لقب</span><span class="cmd-desc">انتقال الماس به کاربر دیگر</span><div class="cmd-example">مثال: انتقال الماس 10 @میگل</div></li>
-                        <li><span class="cmd-name">کد دعوت</span><span class="cmd-desc">نمایش کد دعوت اختصاصی شما</span></li>
-                        <li><span class="cmd-name">کد دعوت [کد]</span><span class="cmd-desc">استفاده از کد دعوت دوستان</span></li>
-                        <li><span class="cmd-name">کد [کد]</span><span class="cmd-desc">استفاده از کد هدیه مدیریت</span></li>
-                    </ul>
-                </div>
-                <div class="badge">💡 نکته: میانبرها - کل / نصف / ربع / ثلث / خمس</div>
-            </div>
-        </div>
-
-        <!-- بازی‌ها -->
-        <div class="section-wrapper">
-            <div class="section" data-section="games">
-                <div class="section-title"><span>🎲</span> بازی‌ها</div>
-                <div class="section-preview">تاس، اسلات، سنگ کاغذ قیچی، رولت و...</div>
-            </div>
-            <div class="detail-box" id="detail-games">
-                <div class="detail-title">🎲 بازی‌ها (شانس ۵۰%)</div>
-                <div class="detail-desc">بازی‌های متنوع با شانس ۵۰ درصد برد. می‌توانید با هر مبلغی که دوست دارید شرط ببندید.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">تاس [مبلغ]</span><span class="cmd-desc">بازی تاس با ربات</span><div class="cmd-example">مثال: تاس 1000000</div></li>
-                        <li><span class="cmd-name">تاس دوتایی</span><span class="cmd-desc">بازی ویژه (برد 20M یا باخت 2M)</span></li>
-                        <li><span class="cmd-name">اسلات [مبلغ]</span><span class="cmd-desc">بازی اسلات ماشین با ضریب 1.5x تا 10x</span><div class="cmd-example">مثال: اسلات 500000</div></li>
-                        <li><span class="cmd-name">سنگ/کاغذ/قیچی [مبلغ]</span><span class="cmd-desc">بازی کلاسیک سنگ کاغذ قیچی با ربات</span><div class="cmd-example">مثال: سنگ 100000</div></li>
-                        <li><span class="cmd-name">گل یا پوچ [مبلغ]</span><span class="cmd-desc">پیش‌بینی گل یا پوچ شدن ضربه</span></li>
-                        <li><span class="cmd-name">شیر یا خط [مبلغ]</span><span class="cmd-desc">پرتاب سکه و پیش‌بینی شیر یا خط</span></li>
-                        <li><span class="cmd-name">رولت [مبلغ]</span><span class="cmd-desc">رولت اروپایی (شرط روی زوج = برد 2x)</span></li>
-                        <li><span class="cmd-name">زوج/فرد [مبلغ]</span><span class="cmd-desc">پیش‌بینی زوج یا فرد بودن عدد تصادفی</span></li>
-                        <li><span class="cmd-name">گردونه</span><span class="cmd-desc">هدیه روزانه (۱ تا ۱۰ میلیون کوین)</span></li>
-                    </ul>
-                </div>
-                <div class="badge">💡 نکته: هر بازی به صورت خودکار موجودی قبلی و جدید شما را نمایش میدهد.</div>
-            </div>
-        </div>
-
-        <!-- شغل -->
-        <div class="section-wrapper">
-            <div class="section" data-section="job">
-                <div class="section-title"><span>💼</span> شغل</div>
-                <div class="section-preview">درخواست شغل، حقوق بگیر، لیست مشاغل</div>
-            </div>
-            <div class="detail-box" id="detail-job">
-                <div class="detail-title">💼 شغل (حقوق روزانه)</div>
-                <div class="detail-desc">با خرید شغل می‌توانید هر روز حقوق دریافت کنید. هر شغل حقوق متفاوتی دارد.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">شغل ها</span><span class="cmd-desc">نمایش لیست مشاغل با قیمت و حقوق</span></li>
-                        <li><span class="cmd-name">درخواست شغل [نام]</span><span class="cmd-desc">دریافت شغل جدید (هزینه دارد)</span></li>
-                        <li><span class="cmd-name">عوض شغل [نام]</span><span class="cmd-desc">تغییر شغل فعلی</span></li>
-                        <li><span class="cmd-name">حقوق بگیر</span><span class="cmd-desc">دریافت حقوق روزانه شغل</span></li>
-                    </ul>
-                </div>
-                <div class="jobs-grid">
-                    <div class="job-item"><span class="cmd-name">👷 کارگر</span> - هزینه 6M | حقوق 2M</div>
-                    <div class="job-item"><span class="cmd-name">👮 پلیس</span> - هزینه 12M | حقوق 4M</div>
-                    <div class="job-item"><span class="cmd-name">👨‍💻 مهندس</span> - هزینه 24M | حقوق 8M</div>
-                    <div class="job-item"><span class="cmd-name">💻 هکر</span> - هزینه 36M | حقوق 12M</div>
-                    <div class="job-item"><span class="cmd-name">👨‍💻 برنامه نویس</span> - هزینه 54M | حقوق 15M</div>
-                    <div class="job-item"><span class="cmd-name">🏛️ شهردار</span> - هزینه 84M | حقوق 25M</div>
-                    <div class="job-item"><span class="cmd-name">👑 رئیس جمهور</span> - هزینه 120M | حقوق 50M</div>
-                </div>
-                <div class="badge">💡 نکته: حقوق هر ۲۴ ساعت یکبار قابل دریافت است.</div>
-            </div>
-        </div>
-
-        <!-- ماینر -->
-        <div class="section-wrapper">
-            <div class="section" data-section="miner">
-                <div class="section-title"><span>⛏️</span> ماینر</div>
-                <div class="section-preview">خرید ماینر، جمع‌آوری درآمد، ارتقا سطح</div>
-            </div>
-            <div class="detail-box" id="detail-miner">
-                <div class="detail-title">⛏️ ماینر (استخراج کوین)</div>
-                <div class="detail-desc">ماینرها به صورت خودکار برای شما کوین استخراج می‌کنند. هرچه تعداد ماینر بالاتر باشد، درآمد بیشتری دارید.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">ماینر</span><span class="cmd-desc">نمایش اطلاعات ماینرها (تعداد، سطح، درآمد)</span></li>
-                        <li><span class="cmd-name">ارتقا ماینر [تعداد]</span><span class="cmd-desc">خرید ماینر جدید با سطح بالاتر</span><div class="cmd-example">مثال: ارتقا ماینر 5</div></li>
-                        <li><span class="cmd-name">ارتقا ماینر حداکثر</span><span class="cmd-desc">خرید حداکثر ماینر ممکن با موجودی</span></li>
-                        <li><span class="cmd-name">جمع ماینر</span><span class="cmd-desc">جمع‌آوری درآمد ماینرها</span></li>
-                        <li><span class="cmd-name">پروفیت</span><span class="cmd-desc">نمایش درآمد در بازه‌های مختلف (ساعت، روز، هفته، ماه)</span></li>
-                    </ul>
-                </div>
-                <div class="badge">💰 فرمول: هر ماینر = ۵,۰۰۰ × سطح در ساعت</div>
-            </div>
-        </div>
-
-        <!-- بانک -->
-        <div class="section-wrapper">
-            <div class="section" data-section="bank">
-                <div class="section-title"><span>🏦</span> بانک</div>
-                <div class="section-preview">واریز، برداشت، سود روزانه</div>
-            </div>
-            <div class="detail-box" id="detail-bank">
-                <div class="detail-title">🏦 بانک</div>
-                <div class="detail-desc">می‌توانید پول خود را در بانک نگهداری کنید و سود روزانه ۱۰% دریافت کنید.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">بانک</span><span class="cmd-desc">نمایش موجودی بانکی (سود روزانه ۱۰%)</span></li>
-                        <li><span class="cmd-name">واریز [مبلغ]</span><span class="cmd-desc">واریز به بانک</span><div class="cmd-example">مثال: واریز 10000000</div></li>
-                        <li><span class="cmd-name">برداشت [مبلغ]</span><span class="cmd-desc">برداشت از بانک</span><div class="cmd-example">مثال: برداشت 5000000</div></li>
-                    </ul>
-                </div>
-                <div class="badge">💡 نکته: سود روزانه ۱۰% به موجودی بانکتان اضافه میشود.</div>
-            </div>
-        </div>
-
-        <!-- الماس -->
-        <div class="section-wrapper">
-            <div class="section" data-section="diamond">
-                <div class="section-title"><span>💎</span> الماس</div>
-                <div class="section-preview">خرید و فروش الماس با قیمت ساعتی</div>
-            </div>
-            <div class="detail-box" id="detail-diamond">
-                <div class="detail-title">💎 الماس (قیمت ساعتی)</div>
-                <div class="detail-desc">الماس یک ارز دیجیتال درون بازی است که قیمت آن هر ساعت تغییر می‌کند. می‌توانید الماس بخرید یا بفروشید.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">الماس</span><span class="cmd-desc">نمایش قیمت فعلی خرید و فروش الماس</span></li>
-                        <li><span class="cmd-name">خرید الماس [تعداد]</span><span class="cmd-desc">خرید الماس</span><div class="cmd-example">مثال: خرید الماس 10</div></li>
-                        <li><span class="cmd-name">فروش الماس [تعداد]</span><span class="cmd-desc">فروش الماس</span><div class="cmd-example">مثال: فروش الماس 5</div></li>
-                    </ul>
-                </div>
-                <div class="badge">⏰ قیمت الماس هر ساعت بین ۲۰۰ تا ۱۵۰۰ کوین تغییر می‌کند.</div>
-            </div>
-        </div>
-
-        <!-- رتبه‌بندی -->
-        <div class="section-wrapper">
-            <div class="section" data-section="rank">
-                <div class="section-title"><span>🏆</span> رتبه‌بندی</div>
-                <div class="section-preview">پولداران، الماس‌داران، برتران و...</div>
-            </div>
-            <div class="detail-box" id="detail-rank">
-                <div class="detail-title">🏆 رتبه‌بندی</div>
-                <div class="detail-desc">نمایش برترین کاربران در دسته‌های مختلف.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">پولداران</span><span class="cmd-desc">۱۰ کاربر با بیشترین کوین</span></li>
-                        <li><span class="cmd-name">الماس‌داران</span><span class="cmd-desc">۱۰ کاربر با بیشترین الماس</span></li>
-                        <li><span class="cmd-name">ماینرداران</span><span class="cmd-desc">۱۰ کاربر با بیشترین ماینر</span></li>
-                        <li><span class="cmd-name">برتران</span><span class="cmd-desc">۱۰ کاربر با بیشترین برد در بازی‌ها</span></li>
-                        <li><span class="cmd-name">قویترین ها</span><span class="cmd-desc">۱۰ اتحادیه برتر جنگ</span></li>
-                        <li><span class="cmd-name">فالوداران</span><span class="cmd-desc">۱۰ کاربر با بیشترین فالوور در تیک‌تاک</span></li>
-                    </ul>
-                </div>
-                <div class="badge">📊 رتبه‌بندی به صورت لحظه‌ای به‌روز می‌شود.</div>
-            </div>
-        </div>
-
-        <!-- تیک تاک -->
-        <div class="section-wrapper">
-            <div class="section" data-section="tiktok">
-                <div class="section-title"><span>📱</span> تیک تاک</div>
-                <div class="section-preview">ساخت کانال، پست زدن، خرید اینترنت</div>
-            </div>
-            <div class="detail-box" id="detail-tiktok">
-                <div class="detail-title">📱 تیک‌تاک (شبکه اجتماعی)</div>
-                <div class="detail-desc">با ساخت کانال تیک‌تاک می‌توانید پست منتشر کنید و با جذب فالوور درآمد کسب کنید.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">ساخت کانال تیک تاک [نام]</span><span class="cmd-desc">ساخت کانال شخصی در تیک‌تاک</span><div class="cmd-example">مثال: ساخت کانال تیک تاک میگل</div></li>
-                        <li><span class="cmd-name">تغییر اسم تیک تاک [نام جدید]</span><span class="cmd-desc">تغییر نام کانال تیک‌تاک</span></li>
-                        <li><span class="cmd-name">پست [ورزش/گیم/فیلم/آموزش ادیت]</span><span class="cmd-desc">انتشار پست در کانال تیک‌تاک</span><div class="cmd-example">مثال: پست گیم</div></li>
-                        <li><span class="cmd-name">خرید نت [حجم]</span><span class="cmd-desc">خرید اینترنت برای پست زدن</span><div class="cmd-example">مثال: خرید نت 5 گیگ</div></li>
-                        <li><span class="cmd-name">لیست نت ها</span><span class="cmd-desc">نمایش بسته‌های اینترنت قابل خرید</span></li>
-                        <li><span class="cmd-name">آمار نت</span><span class="cmd-desc">نمایش آمار اینترنت مصرفی</span></li>
-                    </ul>
-                </div>
-                <div class="badge">💡 نکته: هرچه پست بیشتری بزنید، درآمدتان بیشتر می‌شود! هر پست بین 200 مگ تا 1 گیگ نت مصرف می‌کند.</div>
-            </div>
-        </div>
-
-        <!-- اتحادیه -->
-        <div class="section-wrapper">
-            <div class="section" data-section="alliance">
-                <div class="section-title"><span>⚔️</span> اتحادیه</div>
-                <div class="section-preview">ساخت اتحاد، عضویت، جنگ، خرید مهمات</div>
-            </div>
-            <div class="detail-box" id="detail-alliance">
-                <div class="detail-title">⚔️ اتحادیه (جنگ)</div>
-                <div class="detail-desc">با دوستان خود اتحادیه تشکیل دهید، به اتحادیه‌های دیگر حمله کنید و قدرتمند شوید.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">ساخت اتحاد [نام]</span><span class="cmd-desc">ساخت اتحادیه جدید (هزینه ۲۰۰ میلیون)</span><div class="cmd-example">مثال: ساخت اتحاد قدرتمندان</div></li>
-                        <li><span class="cmd-name">عضویت در اتحاد [کد]</span><span class="cmd-desc">درخواست عضویت در اتحادیه</span><div class="cmd-example">مثال: عضویت در اتحاد ABC123</div></li>
-                        <li><span class="cmd-name">اطلاعات اتحاد [کد]</span><span class="cmd-desc">نمایش اطلاعات اتحادیه</span></li>
-                        <li><span class="cmd-name">لیست درخواست</span><span class="cmd-desc">نمایش درخواست‌های عضویت</span></li>
-                        <li><span class="cmd-name">تایید درخواست [لقب]</span><span class="cmd-desc">قبول درخواست عضویت</span></li>
-                        <li><span class="cmd-name">ارتقا معاون [لقب]</span><span class="cmd-desc">انتخاب معاون اتحادیه</span></li>
-                        <li><span class="cmd-name">ارتقا اتحاد [سطح]</span><span class="cmd-desc">ارتقا سطح اتحادیه (۵۰ میلیون هر سطح)</span></li>
-                        <li><span class="cmd-name">تغییر نام اتحاد [نام]</span><span class="cmd-desc">تغییر نام اتحادیه (۱۰۰ میلیون)</span></li>
-                        <li><span class="cmd-name">خزانه اتحادیه</span><span class="cmd-desc">نمایش موجودی خزانه اتحادیه</span></li>
-                        <li><span class="cmd-name">واریز به خزانه [مبلغ]</span><span class="cmd-desc">واریز به خزانه اتحادیه</span></li>
-                        <li><span class="cmd-name">خرید مهمات [نام] [تعداد]</span><span class="cmd-desc">خرید مهمات جنگی (موشک بالستیک/بمب اتم)</span></li>
-                        <li><span class="cmd-name">بازیابی [درصد]</span><span class="cmd-desc">بازیابی سلامت اتحادیه (۵ میلیون هر ۱%)</span></li>
-                        <li><span class="cmd-name">حمله به [کد]</span><span class="cmd-desc">حمله به اتحادیه دیگر</span><div class="cmd-example">مثال: حمله به XYZ789</div></li>
-                    </ul>
-                </div>
-                <div class="badge">📈 هرچه سطح اتحادیه بالاتر باشد، ظرفیت اعضا بیشتر می‌شود.</div>
-            </div>
-        </div>
-
-        <!-- بتل پس -->
-        <div class="section-wrapper">
-            <div class="section" data-section="battlepass">
-                <div class="section-title"><span>🎖️</span> بتل پس</div>
-                <div class="section-preview">ماموریت‌ها، دریافت جایزه، پریمیوم</div>
-            </div>
-            <div class="detail-box" id="detail-battlepass">
-                <div class="detail-title">🎖️ بتل پس (فصلی)</div>
-                <div class="detail-desc">با انجام ماموریت‌ها XP کسب کنید و سطح بتل پس خود را بالا ببرید. در هر سطح جایزه دریافت می‌کنید.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">بتل پس</span><span class="cmd-desc">نمایش وضعیت بتل پس (سطح، XP، جوایز)</span></li>
-                        <li><span class="cmd-name">ویژه [کد]</span><span class="cmd-desc">فعال‌سازی بتل پس پریمیوم (جوایز ۲ برابر)</span><div class="cmd-example">مثال: ویژه ABC123</div></li>
-                        <li><span class="cmd-name">ماموریت ها</span><span class="cmd-desc">نمایش ماموریت‌های بتل پس</span></li>
-                        <li><span class="cmd-name">دریافت جایزه [سطح]</span><span class="cmd-desc">دریافت جایزه سطح (فقط سطوح زوج)</span><div class="cmd-example">مثال: دریافت جایزه 10</div></li>
-                        <li><span class="cmd-name">دریافت همه</span><span class="cmd-desc">دریافت تمام جوایز قابل دریافت</span></li>
-                    </ul>
-                </div>
-                <div class="badge">💡 هر عمل در ربات (بازی، خرید ماینر و...) به شما XP می‌دهد!</div>
-            </div>
-        </div>
-
-        <!-- شاپ -->
-        <div class="section-wrapper">
-            <div class="section" data-section="shop">
-                <div class="section-title"><span>🛒</span> شاپ</div>
-                <div class="section-preview">پکیج‌های خرید کوین با تومان</div>
-            </div>
-            <div class="detail-box" id="detail-shop">
-                <div class="detail-title">🛒 شاپ (خرید با تومان)</div>
-                <div class="detail-desc">برای خرید کوین و بتل پس پریمیوم می‌توانید از پکیج‌های شاپ استفاده کنید.</div>
-                <div class="detail-commands">
-                    <h4>📌 دستورات این بخش:</h4>
-                    <ul>
-                        <li><span class="cmd-name">شاپ</span><span class="cmd-desc">نمایش پکیج‌های خرید کوین</span></li>
-                    </ul>
-                </div>
-                <div class="packages-grid">
-                    <div class="package-item"><span class="cmd-name">نقره‌ای</span> - 500,000,000 کوین | 50,000 تومان</div>
-                    <div class="package-item"><span class="cmd-name">طلایی</span> - 800,000,000 کوین | 90,000 تومان</div>
-                    <div class="package-item"><span class="cmd-name">الماسی</span> - 1,500,000,000 کوین | 140,000 تومان</div>
-                    <div class="package-item"><span class="cmd-name">افسانه‌ای</span> - 5,000,000,000 + هدیه | 300,000 تومان</div>
-                    <div class="package-item"><span class="cmd-name">سلطنتی</span> - 10,000,000,000 + هدیه | 650,000 تومان</div>
-                    <div class="package-item"><span class="cmd-name">بتل پس پریمیوم</span> - جوایز ۲ برابر | 70,000 تومان</div>
-                </div>
-                <div class="badge">💡 برای خرید به پی وی سازنده مراجعه کنید: @HI_IM_MIGUEL</div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>🎮 آلفا گیم | بهترین ربات بازی روبیکا</p>
-            <p>📢 کانال: @Alpha_Bots | 👑 سازنده: @HI_IM_MIGUEL</p>
+<div class="container">
+    <!-- هدر -->
+    <div class="header">
+        <h1>🎮 آلفا گیم | راهنمای ربات</h1>
+        <p>ربات بازی‌های شانسی، اقتصادی، شبکه اجتماعی و بتل پس</p>
+        <div>
+            <span class="badge">🤖 @Game_Alpha_Bot</span>
+            <span class="badge">👑 @HI_IM_MIGUEL</span>
+            <span class="badge">📢 @Alpha_Bots</span>
         </div>
     </div>
 
-    <script>
-        const sections = document.querySelectorAll('.section');
-        sections.forEach(section => {
-            section.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const wrapper = this.parentElement;
-                const detailBox = wrapper.querySelector('.detail-box');
-                const allDetailBoxes = document.querySelectorAll('.detail-box');
-                allDetailBoxes.forEach(box => {
-                    if (box !== detailBox && box.classList.contains('show')) {
-                        box.classList.remove('show');
-                        const parentWrapper = box.parentElement;
-                        if (parentWrapper) {
-                            const parentSection = parentWrapper.querySelector('.section');
-                            if (parentSection) parentSection.classList.remove('active');
-                        }
-                    }
-                });
-                if (detailBox.classList.contains('show')) {
-                    detailBox.classList.remove('show');
-                    this.classList.remove('active');
-                } else {
-                    detailBox.classList.add('show');
-                    this.classList.add('active');
-                    setTimeout(() => { detailBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
-                }
-            });
-        });
-    </script>
+    <!-- 1️⃣ دستورات پایه -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">👤</span><span class="title">دستورات پایه و حساب کاربری</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>راهنما</td><td>نمایش لینک راهنمای کامل ربات</td></tr>
+                <tr><td>موجودی</td><td>نمایش پروفایل کامل شما (موجودی، رتبه، ماینر، شغل و...)</td></tr>
+                <tr><td>موجودی @لقب</td><td>مشاهده پروفایل کاربر دیگر با استفاده از لقب او</td></tr>
+                <tr><td>لقب نام_جدید</td><td>تنظیم یک لقب (بین ۳ تا ۱۵ کاراکتر، یکتا) - مثال: لقب رضا123</td></tr>
+                <tr><td>کد دعوت</td><td>نمایش کد دعوت اختصاصی شما</td></tr>
+                <tr><td>کد دعوت [کد]</td><td>استفاده از کد دعوت دوستان (هر دو نفر پاداش می‌گیرند)</td></tr>
+                <tr><td>گردونه</td><td>چرخاندن گردونه شانس روزانه (یک بار در روز)</td></tr>
+                <tr><td>انتقال [مبلغ] @لقب</td><td>انتقال کوین به کاربر دیگر</td></tr>
+                <tr><td>انتقال الماس [تعداد] @لقب</td><td>انتقال الماس به کاربر دیگر</td></tr>
+            </table>
+            <div class="tip-box">💡 نکته: در همه بازی‌ها می‌توانید به جای عدد، از کلمات <strong>کل، نصف، ربع، ثلث، خمس</strong> استفاده کنید.</div>
+        </div>
+    </div>
+
+    <!-- 2️⃣ بازی‌ها -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">🎲</span><span class="title">بازی‌ها و شرط‌بندی</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>تاس [مبلغ]</td><td>بازی تاس (هر کس عدد بزرگتری بیاورد) - برد: ۲ برابر شرط</td></tr>
+                <tr><td>تاس دوتایی</td><td>شرط ۲ میلیونی روی آوردن هر دو تاس ۶ - برد: ۲۰ میلیون</td></tr>
+                <tr><td>اسلات [مبلغ]</td><td>بازی ماشین اسلات ۳ ریل - ضریب ۱.۵ تا ۱۰ برابر</td></tr>
+                <tr><td>سنگ [مبلغ]</td><td>بازی سنگ کاغذ قیچی (با انتخاب سنگ) - برد: ۲ برابر</td></tr>
+                <tr><td>کاغذ [مبلغ]</td><td>بازی سنگ کاغذ قیچی (با انتخاب کاغذ) - برد: ۲ برابر</td></tr>
+                <tr><td>قیچی [مبلغ]</td><td>بازی سنگ کاغذ قیچی (با انتخاب قیچی) - برد: ۲ برابر</td></tr>
+                <tr><td>گل یا پوچ [مبلغ]</td><td>پیش‌بینی گل یا پوچ شدن ضربه - برد: ۲ برابر</td></tr>
+                <tr><td>شیر یا خط [مبلغ]</td><td>پیش‌بینی شیر یا خط سکه - برد: ۲ برابر</td></tr>
+                <tr><td>رولت [مبلغ]</td><td>شرط بندی روی زوج (سیاه) یا فرد (قرمز) - برد: ۲ برابر</td></tr>
+                <tr><td>زوج [مبلغ] یا فرد [مبلغ]</td><td>مشابه رولت اما با اعداد ۱ تا ۱۰۰ - برد: ۲ برابر</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 3️⃣ مشاغل (زیبا شده) -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">💼</span><span class="title">مشاغل (درآمد روزانه)</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>شغل ها</td><td>نمایش لیست مشاغل به همراه هزینه و حقوق روزانه</td></tr>
+                <tr><td>درخواست شغل [نام]</td><td>خرید شغل (حقوق روزانه واریز می‌شود)</td></tr>
+                <tr><td>عوض شغل [نام]</td><td>تغییر شغل (هزینه جدید پرداخت می‌شود)</td></tr>
+                <tr><td>حقوق بگیر</td><td>دریافت حقوق روزانه شغل فعلی (هر ۲۴ ساعت یک بار)</td></tr>
+            </table>
+            
+            <!-- لیست مشاغل به صورت گرید زیبا -->
+            <div class="jobs-grid">
+                <div class="job-card">
+                    <div class="job-name">👷 کارگر</div>
+                    <div class="job-price"><span class="price-label">💰 هزینه خرید:</span><span class="price-value">۶,۰۰۰,۰۰۰ کوین</span></div>
+                    <div class="job-price"><span class="price-label">💵 حقوق روزانه:</span><span class="salary-value">۲,۰۰۰,۰۰۰ کوین</span></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-name">👮 پلیس</div>
+                    <div class="job-price"><span class="price-label">💰 هزینه خرید:</span><span class="price-value">۱۲,۰۰۰,۰۰۰ کوین</span></div>
+                    <div class="job-price"><span class="price-label">💵 حقوق روزانه:</span><span class="salary-value">۴,۰۰۰,۰۰۰ کوین</span></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-name">👨‍💻 مهندس</div>
+                    <div class="job-price"><span class="price-label">💰 هزینه خرید:</span><span class="price-value">۲۴,۰۰۰,۰۰۰ کوین</span></div>
+                    <div class="job-price"><span class="price-label">💵 حقوق روزانه:</span><span class="salary-value">۸,۰۰۰,۰۰۰ کوین</span></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-name">🕵️ هکر</div>
+                    <div class="job-price"><span class="price-label">💰 هزینه خرید:</span><span class="price-value">۳۶,۰۰۰,۰۰۰ کوین</span></div>
+                    <div class="job-price"><span class="price-label">💵 حقوق روزانه:</span><span class="salary-value">۱۲,۰۰۰,۰۰۰ کوین</span></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-name">💻 برنامه نویس</div>
+                    <div class="job-price"><span class="price-label">💰 هزینه خرید:</span><span class="price-value">۵۴,۰۰۰,۰۰۰ کوین</span></div>
+                    <div class="job-price"><span class="price-label">💵 حقوق روزانه:</span><span class="salary-value">۱۵,۰۰۰,۰۰۰ کوین</span></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-name">🏛️ شهردار</div>
+                    <div class="job-price"><span class="price-label">💰 هزینه خرید:</span><span class="price-value">۸۴,۰۰۰,۰۰۰ کوین</span></div>
+                    <div class="job-price"><span class="price-label">💵 حقوق روزانه:</span><span class="salary-value">۲۵,۰۰۰,۰۰۰ کوین</span></div>
+                </div>
+                <div class="job-card">
+                    <div class="job-name">👑 رئیس جمهور</div>
+                    <div class="job-price"><span class="price-label">💰 هزینه خرید:</span><span class="price-value">۱۲۰,۰۰۰,۰۰۰ کوین</span></div>
+                    <div class="job-price"><span class="price-label">💵 حقوق روزانه:</span><span class="salary-value">۵۰,۰۰۰,۰۰۰ کوین</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4️⃣ ماینر -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">⛏️</span><span class="title">ماینر</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>ماینر</td><td>نمایش وضعیت ماینرها (تعداد، سطح، درآمد)</td></tr>
+                <tr><td>ارتقا ماینر [تعداد]</td><td>خرید ماینر جدید به تعداد مشخص</td></tr>
+                <tr><td>ارتقا ماینر حداکثر</td><td>خرید حداکثر ماینر ممکن با موجودی فعلی</td></tr>
+                <tr><td>جمع ماینر</td><td>جمع‌آوری درآمد ذخیره شده ماینرها از آخرین برداشت</td></tr>
+                <tr><td>پروفیت</td><td>نمایش درآمد ساعتی، روزانه، هفتگی و ماهانه ماینرها</td></tr>
+            </table>
+            <div class="tip-box">💰 هر ماینر <strong>۵,۰۰۰ کوین در ساعت</strong> درآمد دارد! قیمت ماینرها بر اساس سطح شما متغیر است (سطح ۱ تا ۲۰).</div>
+        </div>
+    </div>
+
+    <!-- 5️⃣ الماس -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">💎</span><span class="title">الماس</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>الماس</td><td>نمایش قیمت روز خرید و فروش الماس و تعداد الماس شما</td></tr>
+                <tr><td>خرید الماس [تعداد] یا حداکثر</td><td>تبدیل کوین به الماس</td></tr>
+                <tr><td>فروش الماس [تعداد] یا حداکثر</td><td>تبدیل الماس به کوین</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 6️⃣ بانک -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">🏦</span><span class="title">بانک</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>بانک</td><td>نمایش موجودی بانک (سود روزانه ۱۰٪)</td></tr>
+                <tr><td>واریز [مبلغ]</td><td>واریز کوین به بانک</td></tr>
+                <tr><td>برداشت [مبلغ]</td><td>برداشت کوین از بانک</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 7️⃣ بازار آزاد -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">🏪</span><span class="title">بازار آزاد (خرید/فروش وسایل)</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>ماشین ها / خانه ها / گوشی ها / موتور ها</td><td>نمایش لیست وسایل به همراه قیمت و وضعیت فروش</td></tr>
+                <tr><td>خرید ماشین [نام]</td><td>خرید مستقیم وسیله (در صورت موجود بودن)</td></tr>
+                <tr><td>وسایل من</td><td>نمایش لیست وسایلی که مالک آن هستید</td></tr>
+                <tr><td>فروش [نوع] [نام] [قیمت]</td><td>قراردادن وسیله در بازار با قیمت دلخواه (مثال: فروش ماشین دوج چلنجر 400M)</td></tr>
+                <tr><td>بازار</td><td>مشاهده تمام آگهی‌های فروش</td></tr>
+                <tr><td>فروش من</td><td>مشاهده آگهی‌های فروش خودتان</td></tr>
+                <tr><td>خرید [کد]</td><td>خرید وسیله از بازار با استفاده از کد آگهی</td></tr>
+                <tr><td>حذف [کد]</td><td>حذف آگهی فروش خود و بازگرداندن وسیله</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 8️⃣ تیک تاک -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">📱</span><span class="title">شبکه اجتماعی تیک‌تاک</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>لیست نت ها</td><td>نمایش بسته‌های اینترنت قابل خرید</td></tr>
+                <tr><td>ساخت کانال تیک تاک [نام]</td><td>ساخت کانال تیک‌تاک (قابل تغییر اسم بعداً)</td></tr>
+                <tr><td>تغییر اسم تیک تاک [نام جدید]</td><td>تغییر نام کانال تیک‌تاک</td></tr>
+                <tr><td>خرید نت [حجم]</td><td>خرید اینترنت برای انتشار پست (مثال: خرید نت 5 گیگ)</td></tr>
+                <tr><td>پست [عنوان]</td><td>انتشار پست (موضوعات: ورزش، گیم، فیلم، آموزش ادیت)</td></tr>
+                <tr><td>آمار نت</td><td>نمایش میزان اینترنت باقی‌مانده و مصرف شده</td></tr>
+            </table>
+            <div class="tip-box">📈 هر پست باعث افزایش فالوور و درآمد شما می‌شود. هرچه تعداد پست‌ها بیشتر باشد، درآمد پایه هر پست افزایش می‌یابد!</div>
+        </div>
+    </div>
+
+    <!-- 9️⃣ اتحادیه و جنگ -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">⚔️</span><span class="title">اتحادیه و جنگ</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>ساخت اتحاد [نام]</td><td>ساخت اتحادیه (هزینه ۲۰۰ میلیون کوین)</td></tr>
+                <tr><td>عضویت در اتحاد [کد]</td><td>درخواست عضویت در اتحادیه با کد</td></tr>
+                <tr><td>لیست درخواست</td><td>(لیدر/معاون) مشاهده درخواست‌های عضویت</td></tr>
+                <tr><td>تایید درخواست @لقب</td><td>(لیدر/معاون) پذیرش عضو جدید</td></tr>
+                <tr><td>ارتقا معاون @لقب</td><td>(فقط لیدر) انتصاب معاون</td></tr>
+                <tr><td>اطلاعات اتحاد [کد]</td><td>مشاهده اطلاعات کامل اتحادیه</td></tr>
+                <tr><td>ارتقا اتحاد [سطح]</td><td>(فقط لیدر) ارتقا سطح اتحادیه با کوین شخصی</td></tr>
+                <tr><td>ارتقا اتحاد از خزانه [سطح]</td><td>(فقط لیدر) ارتقا سطح از محل خزانه</td></tr>
+                <tr><td>تغییر نام اتحاد [نام جدید]</td><td>(فقط لیدر) تغییر نام (هزینه ۱۰۰ میلیون)</td></tr>
+                <tr><td>خزانه اتحادیه</td><td>مشاهده موجودی خزانه</td></tr>
+                <tr><td>واریز به خزانه [مبلغ]</td><td>واریز کوین شخصی به خزانه</td></tr>
+                <tr><td>خرید مهمات [نام] [تعداد]</td><td>خرید موشک یا بمب (موشک ۱۰M/۵ آسیب - بمب ۵۰۰M/۱۰۰ آسیب)</td></tr>
+                <tr><td>بازیابی [درصد]</td><td>ترمیم سلامت اتحادیه (هر ۱٪ = ۵ میلیون)</td></tr>
+                <tr><td>حمله به [کد]</td><td>(لیدر/معاون) حمله به اتحادیه دیگر</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- 🔟 بتل پس -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">🎖️</span><span class="title">بتل پس (جایزه‌های فصلی)</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <table class="cmd-table">
+                <tr><td>بتل پس</td><td>نمایش سطح، XP، زمان باقی‌مانده و عنوان شما</td></tr>
+                <tr><td>ماموریت ها</td><td>نمایش لیست کامل کارهایی که به شما XP می‌دهند</td></tr>
+                <tr><td>دریافت جایزه [سطح]</td><td>دریافت جایزه یک سطح زوج خاص</td></tr>
+                <tr><td>دریافت همه</td><td>دریافت تمام جوایز دریافت نشده تا سطح فعلی</td></tr>
+                <tr><td>ویژه [کد]</td><td>فعال‌سازی بتل پس پریمیوم (جوایز ۲ برابر)</td></tr>
+            </table>
+            <div class="tip-box">🏆 هر عمل در ربات به شما XP می‌دهد! در سطوح زوج (۲،۴،۶،...،۵۰) جایزه دریافت می‌کنید. جوایز شامل کوین، الماس، ماینر و عنوان ویژه هستند.</div>
+        </div>
+    </div>
+
+    <!-- ⓫ فروشگاه -->
+    <div class="card">
+        <div class="card-header" onclick="toggleCard(this)">
+            <div><span class="emoji">🛒</span><span class="title">فروشگاه (خرید با تومان)</span></div>
+            <span class="arrow">▼</span>
+        </div>
+        <div class="card-content">
+            <div class="shop-grid">
+                <div class="shop-item"><h4>🥈 نقره‌ای</h4><div class="coins">💰 ۵۰۰,۰۰۰,۰۰۰ کوین</div><div class="price">💵 ۵۰,۰۰۰ تومان</div></div>
+                <div class="shop-item"><h4>🥇 طلایی</h4><div class="coins">💰 ۸۰۰,۰۰۰,۰۰۰ کوین</div><div class="price">💵 ۹۰,۰۰۰ تومان</div></div>
+                <div class="shop-item"><h4>💎 الماسی</h4><div class="coins">💰 ۱,۵۰۰,۰۰۰,۰۰۰ کوین</div><div class="price">💵 ۱۴۰,۰۰۰ تومان</div></div>
+                <div class="shop-item"><h4>🏆 افسانه‌ای</h4><div class="coins">💰 ۵,۰۰۰,۰۰۰,۰۰۰ کوین + ۵۰۰M هدیه</div><div class="price">💵 ۳۰۰,۰۰۰ تومان</div></div>
+                <div class="shop-item"><h4>👑 سلطنتی</h4><div class="coins">💰 ۱۰,۰۰۰,۰۰۰,۰۰۰ کوین + ۱.۵B هدیه</div><div class="price">💵 ۶۵۰,۰۰۰ تومان</div></div>
+                <div class="shop-item"><h4>🎖️ بتل پس پریمیوم</h4><div class="coins">🎁 جوایز ۲ برابر</div><div class="price">💵 ۷۰,۰۰۰ تومان</div></div>
+            </div>
+            <div class="shop-note">
+                💳 برای خرید به پیوی سازنده مراجعه کنید: <strong>@HI_IM_MIGUEL</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleCard(element) {
+        const card = element.closest('.card');
+        card.classList.toggle('active');
+    }
+</script>
 </body>
-                    </html>
+                                                 </html>

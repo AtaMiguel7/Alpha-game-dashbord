@@ -72,15 +72,12 @@
         }
 
         /* بخش‌ها */
-        .section-wrapper {
-            margin-bottom: 20px;
-        }
-
         .section {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 20px;
+            margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             cursor: pointer;
@@ -98,20 +95,16 @@
         }
 
         .section-title {
-            font-size: 1.5em;
+            font-size: 1.8em;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .section-title i {
-            font-size: 1.3em;
-        }
-
         .section-preview {
             color: rgba(255, 255, 255, 0.5);
-            font-size: 0.85em;
+            font-size: 0.9em;
             margin-top: 8px;
         }
 
@@ -120,7 +113,7 @@
             background: linear-gradient(135deg, rgba(78, 205, 196, 0.15), rgba(255, 107, 107, 0.1));
             border-radius: 20px;
             padding: 20px;
-            margin-top: 10px;
+            margin-top: 15px;
             border: 1px solid rgba(78, 205, 196, 0.3);
             display: none;
         }
@@ -136,7 +129,7 @@
         }
 
         .detail-title {
-            font-size: 1.4em;
+            font-size: 1.5em;
             margin-bottom: 12px;
             color: #4ecdc4;
         }
@@ -178,7 +171,6 @@
             font-weight: bold;
             display: inline-block;
             font-family: monospace;
-            direction: ltr;
         }
 
         .cmd-desc {
@@ -192,7 +184,6 @@
             font-size: 0.8em;
             margin-top: 5px;
             font-family: monospace;
-            direction: ltr;
         }
 
         .badge {
@@ -219,11 +210,6 @@
             font-size: 0.85em;
         }
 
-        .job-name, .package-name {
-            color: #4ecdc4;
-            font-weight: bold;
-        }
-
         .footer {
             text-align: center;
             padding: 30px;
@@ -234,7 +220,7 @@
 
         @media (max-width: 768px) {
             .section-title {
-                font-size: 1.2em;
+                font-size: 1.3em;
             }
             .header h1 {
                 font-size: 1.8em;
@@ -242,15 +228,11 @@
             .detail-title {
                 font-size: 1.2em;
             }
-            .jobs-grid, .packages-grid {
-                grid-template-columns: 1fr;
-            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- هدر -->
         <div class="header">
             <h1>🎮 آلفا گیم</h1>
             <p>راهنمای کامل ربات بازی آلفا گیم</p>
@@ -275,9 +257,9 @@
                 <div class="detail-commands">
                     <h4>📌 دستورات این بخش:</h4>
                     <ul>
-                        <li><span class="cmd-name">موجودی</span><span class="cmd-desc">نمایش اطلاعات کامل شما (موجودی، الماس، رتبه، ماینر، شغل و...)</span></li>
-                        <li><span class="cmd-name">موجودی @لقب</span><span class="cmd-desc">نمایش اطلاعات کاربر دیگر با لقب</span><div class="cmd-example">مثال: موجودی @میگل</div></li>
-                        <li><span class="cmd-name">لقب [نام]</span><span class="cmd-desc">تنظیم لقب یکتا برای خود (3 تا 15 کاراکتر)</span><div class="cmd-example">مثال: لقب میگل</div></li>
+                        <li><span class="cmd-name">موجودی</span><span class="cmd-desc">نمایش اطلاعات کامل شما</span></li>
+                        <li><span class="cmd-name">موجودی @لقب</span><span class="cmd-desc">نمایش اطلاعات کاربر دیگر</span><div class="cmd-example">مثال: موجودی @میگل</div></li>
+                        <li><span class="cmd-name">لقب [نام]</span><span class="cmd-desc">تنظیم لقب یکتا (3-15 کاراکتر)</span><div class="cmd-example">مثال: لقب میگل</div></li>
                         <li><span class="cmd-name">انتقال [مبلغ] @لقب</span><span class="cmd-desc">انتقال کوین به کاربر دیگر</span><div class="cmd-example">مثال: انتقال 5000000 @میگل</div></li>
                         <li><span class="cmd-name">انتقال الماس [تعداد] @لقب</span><span class="cmd-desc">انتقال الماس به کاربر دیگر</span><div class="cmd-example">مثال: انتقال الماس 10 @میگل</div></li>
                         <li><span class="cmd-name">کد دعوت</span><span class="cmd-desc">نمایش کد دعوت اختصاصی شما</span></li>
@@ -285,7 +267,7 @@
                         <li><span class="cmd-name">کد [کد]</span><span class="cmd-desc">استفاده از کد هدیه مدیریت</span></li>
                     </ul>
                 </div>
-                <div class="badge" style="margin-top:12px;">💡 نکته: میانبرها - کل / نصف / ربع / ثلث / خمس</div>
+                <div class="badge">💡 نکته: میانبرها - کل / نصف / ربع / ثلث / خمس</div>
             </div>
         </div>
 
@@ -303,18 +285,18 @@
                 <div class="detail-commands">
                     <h4>📌 دستورات این بخش:</h4>
                     <ul>
-                        <li><span class="cmd-name">تاس [مبلغ]</span><span class="cmd-desc">بازی تاس با ربات - هر کس عدد بزرگتری بیاره برنده است</span><div class="cmd-example">مثال: تاس 1000000</div></li>
-                        <li><span class="cmd-name">تاس دوتایی</span><span class="cmd-desc">بازی ویژه - اگر هر دو شش بیاد 20M برنده میشی، وگرنه 2M میدی</span></li>
+                        <li><span class="cmd-name">تاس [مبلغ]</span><span class="cmd-desc">بازی تاس با ربات</span><div class="cmd-example">مثال: تاس 1000000</div></li>
+                        <li><span class="cmd-name">تاس دوتایی</span><span class="cmd-desc">بازی ویژه (برد 20M یا باخت 2M)</span></li>
                         <li><span class="cmd-name">اسلات [مبلغ]</span><span class="cmd-desc">بازی اسلات ماشین با ضریب 1.5x تا 10x</span><div class="cmd-example">مثال: اسلات 500000</div></li>
                         <li><span class="cmd-name">سنگ/کاغذ/قیچی [مبلغ]</span><span class="cmd-desc">بازی کلاسیک سنگ کاغذ قیچی با ربات</span><div class="cmd-example">مثال: سنگ 100000</div></li>
                         <li><span class="cmd-name">گل یا پوچ [مبلغ]</span><span class="cmd-desc">پیش‌بینی گل یا پوچ شدن ضربه</span></li>
                         <li><span class="cmd-name">شیر یا خط [مبلغ]</span><span class="cmd-desc">پرتاب سکه و پیش‌بینی شیر یا خط</span></li>
-                        <li><span class="cmd-name">رولت [مبلغ]</span><span class="cmd-desc">رولت اروپایی - شرط روی زوج (برد 2x)</span></li>
+                        <li><span class="cmd-name">رولت [مبلغ]</span><span class="cmd-desc">رولت اروپایی (شرط روی زوج = برد 2x)</span></li>
                         <li><span class="cmd-name">زوج/فرد [مبلغ]</span><span class="cmd-desc">پیش‌بینی زوج یا فرد بودن عدد تصادفی</span></li>
                         <li><span class="cmd-name">گردونه</span><span class="cmd-desc">هدیه روزانه (۱ تا ۱۰ میلیون کوین)</span></li>
                     </ul>
                 </div>
-                <div class="badge" style="margin-top:12px;">💡 نکته: هر بازی به صورت خودکار موجودی قبلی و جدید شما را نمایش میدهد.</div>
+                <div class="badge">💡 نکته: هر بازی به صورت خودکار موجودی قبلی و جدید شما را نمایش میدهد.</div>
             </div>
         </div>
 
@@ -339,15 +321,15 @@
                     </ul>
                 </div>
                 <div class="jobs-grid">
-                    <div class="job-item"><span class="job-name">کارگر</span> - هزینه 6M | حقوق 2M</div>
-                    <div class="job-item"><span class="job-name">پلیس</span> - هزینه 12M | حقوق 4M</div>
-                    <div class="job-item"><span class="job-name">مهندس</span> - هزینه 24M | حقوق 8M</div>
-                    <div class="job-item"><span class="job-name">هکر</span> - هزینه 36M | حقوق 12M</div>
-                    <div class="job-item"><span class="job-name">برنامه نویس</span> - هزینه 54M | حقوق 15M</div>
-                    <div class="job-item"><span class="job-name">شهردار</span> - هزینه 84M | حقوق 25M</div>
-                    <div class="job-item"><span class="job-name">رئیس جمهور</span> - هزینه 120M | حقوق 50M</div>
+                    <div class="job-item"><span class="cmd-name">👷 کارگر</span> - هزینه 6M | حقوق 2M</div>
+                    <div class="job-item"><span class="cmd-name">👮 پلیس</span> - هزینه 12M | حقوق 4M</div>
+                    <div class="job-item"><span class="cmd-name">👨‍💻 مهندس</span> - هزینه 24M | حقوق 8M</div>
+                    <div class="job-item"><span class="cmd-name">💻 هکر</span> - هزینه 36M | حقوق 12M</div>
+                    <div class="job-item"><span class="cmd-name">👨‍💻 برنامه نویس</span> - هزینه 54M | حقوق 15M</div>
+                    <div class="job-item"><span class="cmd-name">🏛️ شهردار</span> - هزینه 84M | حقوق 25M</div>
+                    <div class="job-item"><span class="cmd-name">👑 رئیس جمهور</span> - هزینه 120M | حقوق 50M</div>
                 </div>
-                <div class="badge" style="margin-top:12px;">💡 نکته: حقوق هر ۲۴ ساعت یکبار قابل دریافت است.</div>
+                <div class="badge">💡 نکته: حقوق هر ۲۴ ساعت یکبار قابل دریافت است.</div>
             </div>
         </div>
 
@@ -361,7 +343,7 @@
             </div>
             <div class="detail-box" id="detail-miner">
                 <div class="detail-title">⛏️ ماینر (استخراج کوین)</div>
-                <div class="detail-desc">ماینرها به صورت خودکار برای شما کوین استخراج می‌کنند. هرچه تعداد و سطح ماینر بالاتر باشد، درآمد بیشتری دارید.</div>
+                <div class="detail-desc">ماینرها به صورت خودکار برای شما کوین استخراج می‌کنند. هرچه تعداد ماینر بالاتر باشد، درآمد بیشتری دارید.</div>
                 <div class="detail-commands">
                     <h4>📌 دستورات این بخش:</h4>
                     <ul>
@@ -373,7 +355,7 @@
                         <li><span class="cmd-name">پروفیت</span><span class="cmd-desc">نمایش درآمد در بازه‌های مختلف (ساعت، روز، هفته، ماه)</span></li>
                     </ul>
                 </div>
-                <div class="badge" style="margin-top:12px;">💰 فرمول: هر ماینر = ۲,۰۰۰ × سطح در ساعت</div>
+                <div class="badge">💰 فرمول: هر ماینر = ۲,۰۰۰ × سطح در ساعت</div>
             </div>
         </div>
 
@@ -401,7 +383,7 @@
                         <li><span class="cmd-name">دزدی @لقب</span><span class="cmd-desc">دزدی از کاربر دیگر (هر ۱ ساعت یکبار)</span><div class="cmd-example">مثال: دزدی @میگل</div></li>
                     </ul>
                 </div>
-                <div class="badge" style="margin-top:12px;">💡 نکته: اگر سطح دزدی شما > سطح سپر هدف → دزدی موفق</div>
+                <div class="badge">💡 نکته: اگر سطح دزدی شما > سطح سپر هدف → دزدی موفق</div>
             </div>
         </div>
 
@@ -424,7 +406,7 @@
                         <li><span class="cmd-name">فروش الماس [تعداد]</span><span class="cmd-desc">فروش الماس</span><div class="cmd-example">مثال: فروش الماس 5</div></li>
                     </ul>
                 </div>
-                <div class="badge" style="margin-top:12px;">⏰ قیمت الماس هر ساعت بین ۲۰۰ تا ۱۵۰۰ کوین تغییر می‌کند.</div>
+                <div class="badge">⏰ قیمت الماس هر ساعت بین ۲۰۰ تا ۱۵۰۰ کوین تغییر می‌کند.</div>
             </div>
         </div>
 
@@ -450,7 +432,7 @@
                         <li><span class="cmd-name">فالوداران</span><span class="cmd-desc">۱۰ کاربر با بیشترین فالوور در تیک‌تاک</span></li>
                     </ul>
                 </div>
-                <div class="badge" style="margin-top:12px;">📊 رتبه‌بندی به صورت لحظه‌ای به‌روز می‌شود.</div>
+                <div class="badge">📊 رتبه‌بندی به صورت لحظه‌ای به‌روز می‌شود.</div>
             </div>
         </div>
 
@@ -476,7 +458,7 @@
                         <li><span class="cmd-name">آمار نت</span><span class="cmd-desc">نمایش آمار اینترنت مصرفی</span></li>
                     </ul>
                 </div>
-                <div class="badge" style="margin-top:12px;">💡 نکته: هرچه پست بیشتری بزنید، درآمدتان بیشتر می‌شود! هر پست بین 200 مگ تا 1 گیگ نت مصرف می‌کند.</div>
+                <div class="badge">💡 نکته: هرچه پست بیشتری بزنید، درآمدتان بیشتر می‌شود! هر پست بین 200 مگ تا 1 گیگ نت مصرف می‌کند.</div>
             </div>
         </div>
 
@@ -509,7 +491,7 @@
                         <li><span class="cmd-name">حمله به [کد]</span><span class="cmd-desc">حمله به اتحادیه دیگر</span><div class="cmd-example">مثال: حمله به XYZ789</div></li>
                     </ul>
                 </div>
-                <div class="badge" style="margin-top:12px;">📈 هرچه سطح اتحادیه بالاتر باشد، ظرفیت اعضا بیشتر می‌شود.</div>
+                <div class="badge">📈 هرچه سطح اتحادیه بالاتر باشد، ظرفیت اعضا بیشتر می‌شود.</div>
             </div>
         </div>
 
@@ -534,7 +516,7 @@
                         <li><span class="cmd-name">دریافت همه</span><span class="cmd-desc">دریافت تمام جوایز قابل دریافت</span></li>
                     </ul>
                 </div>
-                <div class="badge" style="margin-top:12px;">💡 هر عمل در ربات (بازی، خرید ماینر، دزدی و...) به شما XP می‌دهد!</div>
+                <div class="badge">💡 هر عمل در ربات (بازی، خرید ماینر، دزدی و...) به شما XP می‌دهد!</div>
             </div>
         </div>
 
@@ -556,18 +538,17 @@
                     </ul>
                 </div>
                 <div class="packages-grid">
-                    <div class="package-item"><span class="package-name">نقره‌ای</span> - 500,000,000 کوین | 50,000 تومان</div>
-                    <div class="package-item"><span class="package-name">طلایی</span> - 800,000,000 کوین | 90,000 تومان</div>
-                    <div class="package-item"><span class="package-name">الماسی</span> - 1,500,000,000 کوین | 140,000 تومان</div>
-                    <div class="package-item"><span class="package-name">افسانه‌ای</span> - 5,000,000,000 + هدیه | 300,000 تومان</div>
-                    <div class="package-item"><span class="package-name">سلطنتی</span> - 10,000,000,000 + هدیه | 650,000 تومان</div>
-                    <div class="package-item"><span class="package-name">بتل پس پریمیوم</span> - جوایز ۲ برابر | 70,000 تومان</div>
+                    <div class="package-item"><span class="cmd-name">نقره‌ای</span> - 500,000,000 کوین | 50,000 تومان</div>
+                    <div class="package-item"><span class="cmd-name">طلایی</span> - 800,000,000 کوین | 90,000 تومان</div>
+                    <div class="package-item"><span class="cmd-name">الماسی</span> - 1,500,000,000 کوین | 140,000 تومان</div>
+                    <div class="package-item"><span class="cmd-name">افسانه‌ای</span> - 5,000,000,000 + هدیه | 300,000 تومان</div>
+                    <div class="package-item"><span class="cmd-name">سلطنتی</span> - 10,000,000,000 + هدیه | 650,000 تومان</div>
+                    <div class="package-item"><span class="cmd-name">بتل پس پریمیوم</span> - جوایز ۲ برابر | 70,000 تومان</div>
                 </div>
-                <div class="badge" style="margin-top:12px;">💡 برای خرید به پی وی سازنده مراجعه کنید: @HI_IM_MIGUEL</div>
+                <div class="badge">💡 برای خرید به پی وی سازنده مراجعه کنید: @HI_IM_MIGUEL</div>
             </div>
         </div>
 
-        <!-- فوتر -->
         <div class="footer">
             <p>🎮 آلفا گیم | بهترین ربات بازی روبیکا</p>
             <p>📢 کانال: @Alpha_Bots | 👑 سازنده: @HI_IM_MIGUEL</p>
@@ -591,7 +572,6 @@
                 allDetailBoxes.forEach(box => {
                     if (box !== detailBox && box.classList.contains('show')) {
                         box.classList.remove('show');
-                        // حذف کلاس active از بخش مربوطه
                         const parentWrapper = box.parentElement;
                         if (parentWrapper) {
                             const parentSection = parentWrapper.querySelector('.section');
@@ -617,4 +597,4 @@
         });
     </script>
 </body>
-    </html>
+                        </html>

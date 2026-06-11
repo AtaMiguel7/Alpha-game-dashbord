@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎮 آلفا گیم | راهنمای کامل ربات</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -18,13 +13,7 @@
             color: #fff;
             padding: 20px;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* هدر */
+        .container { max-width: 1200px; margin: 0 auto; }
         .header {
             text-align: center;
             padding: 30px 20px;
@@ -34,7 +23,6 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
         .header h1 {
             font-size: 2.5em;
             background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
@@ -42,12 +30,7 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 10px;
         }
-
-        .header p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1em;
-        }
-
+        .header p { color: rgba(255, 255, 255, 0.7); font-size: 1.1em; }
         .bot-links {
             display: flex;
             justify-content: center;
@@ -55,7 +38,6 @@
             margin-top: 20px;
             flex-wrap: wrap;
         }
-
         .bot-link {
             background: rgba(255, 255, 255, 0.1);
             padding: 10px 25px;
@@ -65,170 +47,46 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(78, 205, 196, 0.3);
         }
-
-        .bot-link:hover {
-            background: rgba(78, 205, 196, 0.2);
-            transform: translateY(-2px);
-        }
-
-        /* بخش‌ها */
+        .bot-link:hover { background: rgba(78, 205, 196, 0.2); transform: translateY(-2px); }
+        .section-wrapper { margin-bottom: 20px; }
         .section {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 20px;
-            margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
             cursor: pointer;
         }
-
-        .section:hover {
-            transform: translateY(-3px);
-            border-color: rgba(78, 205, 196, 0.5);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .section.active {
-            border-color: #4ecdc4;
-            background: rgba(78, 205, 196, 0.1);
-        }
-
-        .section-title {
-            font-size: 1.8em;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-preview {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9em;
-            margin-top: 8px;
-        }
-
-        /* توضیحات کامل - زیر هر بخش */
+        .section:hover { transform: translateY(-3px); border-color: rgba(78, 205, 196, 0.5); background: rgba(255, 255, 255, 0.08); }
+        .section.active { border-color: #4ecdc4; background: rgba(78, 205, 196, 0.1); }
+        .section-title { font-size: 1.5em; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .section-preview { color: rgba(255, 255, 255, 0.5); font-size: 0.85em; margin-top: 8px; }
         .detail-box {
             background: linear-gradient(135deg, rgba(78, 205, 196, 0.15), rgba(255, 107, 107, 0.1));
             border-radius: 20px;
             padding: 20px;
-            margin-top: 15px;
+            margin-top: 10px;
             border: 1px solid rgba(78, 205, 196, 0.3);
             display: none;
         }
-
-        .detail-box.show {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .detail-title {
-            font-size: 1.5em;
-            margin-bottom: 12px;
-            color: #4ecdc4;
-        }
-
-        .detail-desc {
-            line-height: 1.7;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 15px;
-        }
-
-        .detail-commands {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 15px;
-            margin-top: 10px;
-        }
-
-        .detail-commands h4 {
-            color: #ff6b6b;
-            margin-bottom: 10px;
-        }
-
-        .detail-commands ul {
-            list-style: none;
-            padding-right: 0;
-        }
-
-        .detail-commands li {
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .detail-commands li:last-child {
-            border-bottom: none;
-        }
-
-        .cmd-name {
-            color: #4ecdc4;
-            font-weight: bold;
-            display: inline-block;
-            font-family: monospace;
-        }
-
-        .cmd-desc {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9em;
-            margin-right: 10px;
-        }
-
-        .cmd-example {
-            color: #ff6b6b;
-            font-size: 0.8em;
-            margin-top: 5px;
-            font-family: monospace;
-        }
-
-        .badge {
-            display: inline-block;
-            background: rgba(78, 205, 196, 0.2);
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.7em;
-            color: #4ecdc4;
-            margin-left: 8px;
-        }
-
-        .jobs-grid, .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .job-item, .package-item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 0.85em;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 30px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.9em;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 1.3em;
-            }
-            .header h1 {
-                font-size: 1.8em;
-            }
-            .detail-title {
-                font-size: 1.2em;
-            }
-        }
+        .detail-box.show { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .detail-title { font-size: 1.4em; margin-bottom: 12px; color: #4ecdc4; }
+        .detail-desc { line-height: 1.7; color: rgba(255, 255, 255, 0.9); margin-bottom: 15px; }
+        .detail-commands { background: rgba(0, 0, 0, 0.3); border-radius: 15px; padding: 15px; margin-top: 10px; }
+        .detail-commands h4 { color: #ff6b6b; margin-bottom: 10px; }
+        .detail-commands ul { list-style: none; padding-right: 0; }
+        .detail-commands li { padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .detail-commands li:last-child { border-bottom: none; }
+        .cmd-name { color: #4ecdc4; font-weight: bold; display: inline-block; font-family: monospace; }
+        .cmd-desc { color: rgba(255, 255, 255, 0.7); font-size: 0.9em; margin-right: 10px; }
+        .cmd-example { color: #ff6b6b; font-size: 0.8em; margin-top: 5px; font-family: monospace; }
+        .badge { display: inline-block; background: rgba(78, 205, 196, 0.2); padding: 2px 8px; border-radius: 20px; font-size: 0.7em; color: #4ecdc4; margin-left: 8px; }
+        .jobs-grid, .packages-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin-top: 10px; }
+        .job-item, .package-item { background: rgba(0, 0, 0, 0.3); padding: 8px 12px; border-radius: 10px; font-size: 0.85em; }
+        .footer { text-align: center; padding: 30px; color: rgba(255, 255, 255, 0.5); font-size: 0.9em; margin-top: 20px; }
+        @media (max-width: 768px) { .section-title { font-size: 1.2em; } .header h1 { font-size: 1.8em; } .detail-title { font-size: 1.2em; } .jobs-grid, .packages-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -243,12 +101,10 @@
             </div>
         </div>
 
-        <!-- بخش 1: دستورات پایه -->
+        <!-- دستورات پایه -->
         <div class="section-wrapper">
             <div class="section" data-section="basic">
-                <div class="section-title">
-                    <span>📋</span> دستورات پایه
-                </div>
+                <div class="section-title"><span>📋</span> دستورات پایه</div>
                 <div class="section-preview">موجودی، انتقال، کد دعوت، لقب و...</div>
             </div>
             <div class="detail-box" id="detail-basic">
@@ -271,12 +127,10 @@
             </div>
         </div>
 
-        <!-- بخش 2: بازی‌ها -->
+        <!-- بازی‌ها -->
         <div class="section-wrapper">
             <div class="section" data-section="games">
-                <div class="section-title">
-                    <span>🎲</span> بازی‌ها
-                </div>
+                <div class="section-title"><span>🎲</span> بازی‌ها</div>
                 <div class="section-preview">تاس، اسلات، سنگ کاغذ قیچی، رولت و...</div>
             </div>
             <div class="detail-box" id="detail-games">
@@ -300,12 +154,10 @@
             </div>
         </div>
 
-        <!-- بخش 3: شغل -->
+        <!-- شغل -->
         <div class="section-wrapper">
             <div class="section" data-section="job">
-                <div class="section-title">
-                    <span>💼</span> شغل
-                </div>
+                <div class="section-title"><span>💼</span> شغل</div>
                 <div class="section-preview">درخواست شغل، حقوق بگیر، لیست مشاغل</div>
             </div>
             <div class="detail-box" id="detail-job">
@@ -333,12 +185,10 @@
             </div>
         </div>
 
-        <!-- بخش 4: ماینر -->
+        <!-- ماینر -->
         <div class="section-wrapper">
             <div class="section" data-section="miner">
-                <div class="section-title">
-                    <span>⛏️</span> ماینر
-                </div>
+                <div class="section-title"><span>⛏️</span> ماینر</div>
                 <div class="section-preview">خرید ماینر، جمع‌آوری درآمد، ارتقا سطح</div>
             </div>
             <div class="detail-box" id="detail-miner">
@@ -348,51 +198,41 @@
                     <h4>📌 دستورات این بخش:</h4>
                     <ul>
                         <li><span class="cmd-name">ماینر</span><span class="cmd-desc">نمایش اطلاعات ماینرها (تعداد، سطح، درآمد)</span></li>
-                        <li><span class="cmd-name">خرید ماینر [تعداد]</span><span class="cmd-desc">خرید ماینر جدید</span><div class="cmd-example">مثال: خرید ماینر 5</div></li>
-                        <li><span class="cmd-name">خرید ماینر حداکثر</span><span class="cmd-desc">خرید حداکثر ماینر ممکن با موجودی</span></li>
+                        <li><span class="cmd-name">ارتقا ماینر [تعداد]</span><span class="cmd-desc">خرید ماینر جدید با سطح بالاتر</span><div class="cmd-example">مثال: ارتقا ماینر 5</div></li>
+                        <li><span class="cmd-name">ارتقا ماینر حداکثر</span><span class="cmd-desc">خرید حداکثر ماینر ممکن با موجودی</span></li>
                         <li><span class="cmd-name">جمع ماینر</span><span class="cmd-desc">جمع‌آوری درآمد ماینرها</span></li>
-                        <li><span class="cmd-name">ارتقا ماینر [تعداد]</span><span class="cmd-desc">ارتقا سطح ماینرها (هر سطح درآمد را 2x می‌کند)</span><div class="cmd-example">مثال: ارتقا ماینر 3</div></li>
                         <li><span class="cmd-name">پروفیت</span><span class="cmd-desc">نمایش درآمد در بازه‌های مختلف (ساعت، روز، هفته، ماه)</span></li>
                     </ul>
                 </div>
-                <div class="badge">💰 فرمول: هر ماینر = ۲,۰۰۰ × سطح در ساعت</div>
+                <div class="badge">💰 فرمول: هر ماینر = ۵,۰۰۰ × سطح در ساعت</div>
             </div>
         </div>
 
-        <!-- بخش 5: بانک و دزدی -->
+        <!-- بانک -->
         <div class="section-wrapper">
             <div class="section" data-section="bank">
-                <div class="section-title">
-                    <span>🏦</span> بانک و دزدی
-                </div>
-                <div class="section-preview">واریز، برداشت، دزدی، ارتقا سطح دزدی و سپر</div>
+                <div class="section-title"><span>🏦</span> بانک</div>
+                <div class="section-preview">واریز، برداشت، سود روزانه</div>
             </div>
             <div class="detail-box" id="detail-bank">
-                <div class="detail-title">🏦 بانک و دزدی</div>
-                <div class="detail-desc">می‌توانید پول خود را در بانک نگهداری کنید و سود روزانه ۱۰% دریافت کنید. همچنین می‌توانید از کاربران دیگر دزدی کنید.</div>
+                <div class="detail-title">🏦 بانک</div>
+                <div class="detail-desc">می‌توانید پول خود را در بانک نگهداری کنید و سود روزانه ۱۰% دریافت کنید.</div>
                 <div class="detail-commands">
                     <h4>📌 دستورات این بخش:</h4>
                     <ul>
                         <li><span class="cmd-name">بانک</span><span class="cmd-desc">نمایش موجودی بانکی (سود روزانه ۱۰%)</span></li>
                         <li><span class="cmd-name">واریز [مبلغ]</span><span class="cmd-desc">واریز به بانک</span><div class="cmd-example">مثال: واریز 10000000</div></li>
                         <li><span class="cmd-name">برداشت [مبلغ]</span><span class="cmd-desc">برداشت از بانک</span><div class="cmd-example">مثال: برداشت 5000000</div></li>
-                        <li><span class="cmd-name">سطح دزدی</span><span class="cmd-desc">نمایش سطح دزدی (حداکثر ۵۰)</span></li>
-                        <li><span class="cmd-name">ارتقا دزدی</span><span class="cmd-desc">افزایش سطح دزدی (هزینه دارد)</span></li>
-                        <li><span class="cmd-name">سطح سپر</span><span class="cmd-desc">نمایش سطح سپر (حداکثر ۵۰)</span></li>
-                        <li><span class="cmd-name">ارتقا سپر</span><span class="cmd-desc">افزایش سطح سپر (هزینه دارد)</span></li>
-                        <li><span class="cmd-name">دزدی @لقب</span><span class="cmd-desc">دزدی از کاربر دیگر (هر ۱ ساعت یکبار)</span><div class="cmd-example">مثال: دزدی @میگل</div></li>
                     </ul>
                 </div>
-                <div class="badge">💡 نکته: اگر سطح دزدی شما > سطح سپر هدف → دزدی موفق</div>
+                <div class="badge">💡 نکته: سود روزانه ۱۰% به موجودی بانکتان اضافه میشود.</div>
             </div>
         </div>
 
-        <!-- بخش 6: الماس -->
+        <!-- الماس -->
         <div class="section-wrapper">
             <div class="section" data-section="diamond">
-                <div class="section-title">
-                    <span>💎</span> الماس
-                </div>
+                <div class="section-title"><span>💎</span> الماس</div>
                 <div class="section-preview">خرید و فروش الماس با قیمت ساعتی</div>
             </div>
             <div class="detail-box" id="detail-diamond">
@@ -410,12 +250,10 @@
             </div>
         </div>
 
-        <!-- بخش 7: رتبه‌بندی -->
+        <!-- رتبه‌بندی -->
         <div class="section-wrapper">
             <div class="section" data-section="rank">
-                <div class="section-title">
-                    <span>🏆</span> رتبه‌بندی
-                </div>
+                <div class="section-title"><span>🏆</span> رتبه‌بندی</div>
                 <div class="section-preview">پولداران، الماس‌داران، برتران و...</div>
             </div>
             <div class="detail-box" id="detail-rank">
@@ -436,12 +274,10 @@
             </div>
         </div>
 
-        <!-- بخش 8: تیک تاک -->
+        <!-- تیک تاک -->
         <div class="section-wrapper">
             <div class="section" data-section="tiktok">
-                <div class="section-title">
-                    <span>📱</span> تیک تاک
-                </div>
+                <div class="section-title"><span>📱</span> تیک تاک</div>
                 <div class="section-preview">ساخت کانال، پست زدن، خرید اینترنت</div>
             </div>
             <div class="detail-box" id="detail-tiktok">
@@ -462,12 +298,10 @@
             </div>
         </div>
 
-        <!-- بخش 9: اتحادیه -->
+        <!-- اتحادیه -->
         <div class="section-wrapper">
             <div class="section" data-section="alliance">
-                <div class="section-title">
-                    <span>⚔️</span> اتحادیه
-                </div>
+                <div class="section-title"><span>⚔️</span> اتحادیه</div>
                 <div class="section-preview">ساخت اتحاد، عضویت، جنگ، خرید مهمات</div>
             </div>
             <div class="detail-box" id="detail-alliance">
@@ -495,12 +329,10 @@
             </div>
         </div>
 
-        <!-- بخش 10: بتل پس -->
+        <!-- بتل پس -->
         <div class="section-wrapper">
             <div class="section" data-section="battlepass">
-                <div class="section-title">
-                    <span>🎖️</span> بتل پس
-                </div>
+                <div class="section-title"><span>🎖️</span> بتل پس</div>
                 <div class="section-preview">ماموریت‌ها، دریافت جایزه، پریمیوم</div>
             </div>
             <div class="detail-box" id="detail-battlepass">
@@ -516,16 +348,14 @@
                         <li><span class="cmd-name">دریافت همه</span><span class="cmd-desc">دریافت تمام جوایز قابل دریافت</span></li>
                     </ul>
                 </div>
-                <div class="badge">💡 هر عمل در ربات (بازی، خرید ماینر، دزدی و...) به شما XP می‌دهد!</div>
+                <div class="badge">💡 هر عمل در ربات (بازی، خرید ماینر و...) به شما XP می‌دهد!</div>
             </div>
         </div>
 
-        <!-- بخش 11: شاپ -->
+        <!-- شاپ -->
         <div class="section-wrapper">
             <div class="section" data-section="shop">
-                <div class="section-title">
-                    <span>🛒</span> شاپ
-                </div>
+                <div class="section-title"><span>🛒</span> شاپ</div>
                 <div class="section-preview">پکیج‌های خرید کوین با تومان</div>
             </div>
             <div class="detail-box" id="detail-shop">
@@ -556,18 +386,12 @@
     </div>
 
     <script>
-        // اضافه کردن functionality برای باز و بسته شدن توضیحات
         const sections = document.querySelectorAll('.section');
-        
         sections.forEach(section => {
             section.addEventListener('click', function(e) {
                 e.stopPropagation();
-                
-                // پیدا کردن بخش wrapper و detail-box مربوطه
                 const wrapper = this.parentElement;
                 const detailBox = wrapper.querySelector('.detail-box');
-                
-                // بستن سایر بخش‌های باز
                 const allDetailBoxes = document.querySelectorAll('.detail-box');
                 allDetailBoxes.forEach(box => {
                     if (box !== detailBox && box.classList.contains('show')) {
@@ -579,22 +403,16 @@
                         }
                     }
                 });
-                
-                // باز یا بسته کردن بخش جاری
                 if (detailBox.classList.contains('show')) {
                     detailBox.classList.remove('show');
                     this.classList.remove('active');
                 } else {
                     detailBox.classList.add('show');
                     this.classList.add('active');
-                    
-                    // اسکرول به باکس توضیحات
-                    setTimeout(() => {
-                        detailBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }, 100);
+                    setTimeout(() => { detailBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }, 100);
                 }
             });
         });
     </script>
 </body>
-                        </html>
+                    </html>
